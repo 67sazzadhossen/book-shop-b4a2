@@ -6,6 +6,12 @@ const createBookIntoDB = async (book: TBook) => {
   return result;
 };
 
+const getAllBooksFromDB = async () => {
+  const result = await BookModel.find();
+  return result;
+};
+
 export const BookServices = {
+  getAllBooksFromDB,
   createBookIntoDB,
 };
