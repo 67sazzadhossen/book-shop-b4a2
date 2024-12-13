@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import { TBook } from './product.interface';
 
 const bookSchema = new Schema<TBook>({
-  title: { type: String, required: true },
+  title: { type: String, required: true, unique: true },
   author: { type: String, required: true },
   price: { type: Number, required: true },
   category: {
