@@ -27,7 +27,24 @@ const getAllBooks = async (req: Request, res: Response) => {
   try {
     const result = await BookServices.getAllBooksFromDB();
     res.status(200).json({
-      message: 'Book created successfully',
+      message: 'Books data are retrived successfully',
+      status: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Something went wrong',
+      status: false,
+      error,
+    });
+  }
+};
+const getSingleBook = async (req: Request, res: Response) => {
+  const { productId } = req.params;
+  try {
+    const result = await BookServices.getSingleBookFromDB(productId);
+    res.status(200).json({
+      message: 'Book data is retrived successfully',
       status: true,
       data: result,
     });
@@ -42,5 +59,6 @@ const getAllBooks = async (req: Request, res: Response) => {
 
 export const bookControllers = {
   getAllBooks,
+  getSingleBook,
   createBook,
 };
