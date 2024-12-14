@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { BookServices } from './product.service';
 import { bookValidationSchema } from './product.validation';
 
+// create book into db
 const createBook = async (req: Request, res: Response) => {
   try {
     const { book } = req.body;
@@ -23,6 +24,7 @@ const createBook = async (req: Request, res: Response) => {
   }
 };
 
+// get all books from db
 const getAllBooks = async (req: Request, res: Response) => {
   try {
     const result = await BookServices.getAllBooksFromDB();
@@ -39,6 +41,8 @@ const getAllBooks = async (req: Request, res: Response) => {
     });
   }
 };
+
+// get a single book from db
 const getSingleBook = async (req: Request, res: Response) => {
   const { productId } = req.params;
   try {
@@ -57,8 +61,49 @@ const getSingleBook = async (req: Request, res: Response) => {
   }
 };
 
+// update a book data in db
+const updateBook = async (req: Request, res: Response) => {
+  const { productId } = req.params;
+  const { book } = req.body;
+  try {
+    const result = await BookServices.updateBookDataInDB(productId, book);
+    res.status(200).json({
+      message: 'Book updated successfully',
+      status: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Something went wrong',
+      status: false,
+      error,
+    });
+  }
+};
+
+// delete a book from db
+const deleteBook = async (req: Request, res: Response) => {
+  const { productId } = req.params;
+  try {
+    await BookServices.deleteBookDataFromDB(productId);
+    res.status(200).json({
+      message: 'Book deleted successfully',
+      status: true,
+      data: {},
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Something went wrong',
+      status: false,
+      error,
+    });
+  }
+};
+
 export const bookControllers = {
   getAllBooks,
   getSingleBook,
   createBook,
+  updateBook,
+  deleteBook,
 };

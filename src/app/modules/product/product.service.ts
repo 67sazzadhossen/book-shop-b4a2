@@ -20,8 +20,24 @@ const getSingleBookFromDB = async (id: string) => {
   return result;
 };
 
+// update a book data
+const updateBookDataInDB = async (id: string, updatedData: Partial<TBook>) => {
+  const result = await BookModel.findOneAndUpdate(
+    { _id: new Types.ObjectId(id) },
+    updatedData,
+  );
+  return result;
+};
+// delete book data by id
+const deleteBookDataFromDB = async (id: string) => {
+  const result = await BookModel.deleteOne({ _id: new Types.ObjectId(id) });
+  return result;
+};
+
 export const BookServices = {
   getAllBooksFromDB,
   getSingleBookFromDB,
   createBookIntoDB,
+  updateBookDataInDB,
+  deleteBookDataFromDB,
 };
