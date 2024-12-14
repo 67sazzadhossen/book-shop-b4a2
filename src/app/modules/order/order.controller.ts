@@ -19,7 +19,25 @@ const createOrderIntoDB = async (req: Request, res: Response) => {
     });
   }
 };
+// calculate revenue
+const calculateRevenue = async (req: Request, res: Response) => {
+  try {
+    const result = await orderServices.calculateRevenueFromOrder();
+    res.status(200).json({
+      message: 'Order created successfully',
+      status: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(200).json({
+      message: 'Something went wrong',
+      status: false,
+      error,
+    });
+  }
+};
 
 export const orderController = {
   createOrderIntoDB,
+  calculateRevenue,
 };
