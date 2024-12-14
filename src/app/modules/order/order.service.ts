@@ -1,8 +1,23 @@
+import { BookServices } from '../product/product.service';
 import { TOrder } from './order.interface';
 import { OrderModel } from './order.model';
 
 // create order
 const createOrder = async (data: TOrder) => {
+  const { product: productId, quantity } = data;
+
+  const isProductExists = await BookServices.getSingleBookFromDB(
+    productId.toString(),
+  );
+
+  if (!isProductExists) {
+    throw new Error('Product not found');
+  }
+
+  if (quantity > isProductExists.quantity) {
+    throw new Error('Out of stock');
+  }
+
   const result = await OrderModel.create(data);
   return result;
 };
