@@ -3,7 +3,8 @@ import { orderServices } from './order.service';
 
 // create order into DB
 const createOrderIntoDB = async (req: Request, res: Response) => {
-  const { order } = req.body;
+  const order = req.body;
+
   try {
     const result = await orderServices.createOrder(order);
     res.status(200).json({

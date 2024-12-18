@@ -4,9 +4,9 @@ import { bookValidationSchema } from './product.validation';
 
 // create book into db
 const createBook = async (req: Request, res: Response) => {
-  try {
-    const { book } = req.body;
+  const book = req.body;
 
+  try {
     const zodParsedData = bookValidationSchema.parse(book);
 
     const result = await BookServices.createBookIntoDB(zodParsedData);
